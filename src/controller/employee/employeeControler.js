@@ -1,17 +1,20 @@
 const getEmployeesService = require('../../services/employee/getEmployeesService'),
     getEmployeesByNameService = require('../../services/employee/getEmployeesByNameService'),
     hireEmployeeService = require('../../services/employee/hireEmployeeService'),
+    hireRandomEmployeeService = require('../../services/employee/hireRandomEmployeeService'),
     updateEmployeeService = require('../../services/employee/updateEmployeeService'),
     fireEmployeeService = require('../../services/employee/fireEmployeeService')
 
 const getEmployeesController = async (req, res) => {
     try {
-        let employees
+        let employees;
+
         if (req.params.name) {
             employees = await getEmployeesByNameService(req)
         } else {
-            employees = await getEmployeesService(req)
+            employees = await getEmployeesService()
         }
+
         res.json(employees)
     } catch (error) {
         console.log(error)
@@ -22,7 +25,17 @@ const getEmployeesController = async (req, res) => {
 const hireEmployeeController = async (req, res) => {
     try {
         const employee = await hireEmployeeService(req)
-        res.status(200).json({message: 'New employee hired! Welcome, ' + employee.name})
+        res.status(200).json({message: 'New employee hired! Welcome, ' + employee.firstName})
+    } catch (error) {
+        console.log(error)
+        res.json({message: error.message})
+    }
+}
+
+const hireRandomEmployeeController = async (req, res) => {
+    try {
+        const employee = await hireRandomEmployeeService(req)
+        res.status(200).json({message: 'New employee hired! Welcome, ' + employee.firstName})
     } catch (error) {
         console.log(error)
         res.json({message: error.message})
@@ -49,4 +62,4 @@ const fireEmployeeController = async (req, res) => {
     }
 }
 
-module.exports = { getEmployeesController, hireEmployeeController, updateEmployeeController, fireEmployeeController }
+module.exports = { getEmployeesController, hireEmployeeController, hireRandomEmployeeController, updateEmployeeController, fireEmployeeController }

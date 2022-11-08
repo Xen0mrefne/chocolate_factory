@@ -1,11 +1,31 @@
-const express = require('express')
+const express = require('express'),
+    { body } = require('express-validator'),
+    { validator, checkLength} = require('../utils/validator')
+
 const router = express.Router()
-const { getEmployeesController, hireEmployeeController, updateEmployeeController, fireEmployeeController } = require('../controller/employee/employeeControler')
+const { getEmployeesController,
+    hireEmployeeController,
+    hireRandomEmployeeController,
+    updateEmployeeController,
+    fireEmployeeController
+} = require('../controller/employee/employeeControler')
 
 router.get('/employees', getEmployeesController)
-router.get('/employees/:name', getEmployeesController)
-router.post('/employees', hireEmployeeController)
-router.put('/employees/:name', updateEmployeeController)
-router.delete('/employees/:name', fireEmployeeController)
+
+router.get('/employees/:firstName', getEmployeesController)
+
+router.post('/employees',
+    checkLength,
+    validator,
+    hireEmployeeController)
+
+router.post('/employees/random', hireRandomEmployeeController)
+
+router.put('/employees/:firstName',
+    checkLength,
+    validator,
+    updateEmployeeController)
+
+router.delete('/employees/:firstName', fireEmployeeController)
 
 module.exports = router

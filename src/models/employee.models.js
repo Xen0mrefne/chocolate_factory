@@ -1,9 +1,14 @@
 const { model, Schema } = require('mongoose')
 
 const employeeSchema = new Schema({
-    name: {
+    firstName: {
         type: String,
-        required: [true, "Name is required."],
+        required: [true, "First name is required."],
+        unique: false
+    },
+    lastName: {
+        type: String,
+        required: [true, "Last name is required"],
         unique: false
     },
     position: {
