@@ -1,6 +1,6 @@
 const express = require('express'),
     { body } = require('express-validator'),
-    { validator, checkLength} = require('../utils/validator')
+    { validator, checkNames, checkPositions } = require('../utils/middleware/validator')
 
 const router = express.Router()
 const { getEmployeesController,
@@ -9,20 +9,30 @@ const { getEmployeesController,
     updateEmployeeController,
     fireEmployeeController
 } = require('../controller/employee/employeeControler')
+const auth = require('../utils/middleware/auth')
 
-router.get('/employees', getEmployeesController)
+const getPersonMiddleware = require('../utils/middleware/getPersonMiddleware')
 
-router.get('/employees/:firstName', getEmployeesController)
+/* _-_- ROUTES -_-_ */
+
+router.get('/employees', auth, getEmployeesController)
+
+router.get('/employees/:position',
+    auth,
+    checkPositions,
+    getEmployeesController)
 
 router.post('/employees',
-    checkLength,
+    checkNames,
+    checkPositions,
     validator,
     hireEmployeeController)
 
-router.post('/employees/random', hireRandomEmployeeController)
+router.post('/employees/random', getPersonMiddleware, hireRandomEmployeeController)
 
 router.put('/employees/:firstName',
-    checkLength,
+    checkNames,
+    checkPositions,
     validator,
     updateEmployeeController)
 

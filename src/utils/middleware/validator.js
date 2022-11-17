@@ -3,11 +3,12 @@ const { validationResult } = require('express-validator'),
 
 const positions = ['Packaging', 'Manufacturing', 'Security', 'Operator']
 
-const checkLength = [
+const checkNames = [
     body('firstName').isLength({ min: 3, max: 20 }).withMessage('First name must be between 3 and 20 characters long.'),
-    body('lastName').isLength({ min: 3, max: 20 }).withMessage('Last name must be between 3 and 20 characters long.'),
-    body('position').isIn(positions).withMessage('Insert a valid position')
+    body('lastName').isLength({ min: 3, max: 20 }).withMessage('Last name must be between 3 and 20 characters long.')
 ]
+
+const checkPositions = [body('position').isIn(positions.join(",")).withMessage('Insert a valid position. Check if requested position is correct. Available positions: ' + positions)]
 
 const validator = async (req, res, next) => {
     const errors = validationResult(req)
@@ -17,4 +18,4 @@ const validator = async (req, res, next) => {
     next()
 }
 
-module.exports = {validator, checkLength}
+module.exports = {validator, checkNames, checkPositions}

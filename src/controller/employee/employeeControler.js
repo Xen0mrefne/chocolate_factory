@@ -1,5 +1,5 @@
 const getEmployeesService = require('../../services/employee/getEmployeesService'),
-    getEmployeesByNameService = require('../../services/employee/getEmployeesByNameService'),
+    getEmployeesByPosition = require('../../services/employee/getEmployeesByPosition'),
     hireEmployeeService = require('../../services/employee/hireEmployeeService'),
     hireRandomEmployeeService = require('../../services/employee/hireRandomEmployeeService'),
     updateEmployeeService = require('../../services/employee/updateEmployeeService'),
@@ -9,8 +9,8 @@ const getEmployeesController = async (req, res) => {
     try {
         let employees;
 
-        if (req.params.name) {
-            employees = await getEmployeesByNameService(req)
+        if (req.params.position) {
+            employees = await getEmployeesByPosition(req)
         } else {
             employees = await getEmployeesService()
         }
