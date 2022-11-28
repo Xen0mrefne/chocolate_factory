@@ -13,7 +13,7 @@ const loginController = async (req, res) => {
 
 const logoutController = async (req, res) => {
     try {
-        await logoutService(req)
+        logoutService(req)
         res.send('Logged out. See you soon!')
     } catch (error) {
         console.log(error)

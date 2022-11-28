@@ -55,7 +55,7 @@ const updateEmployeeController = async (req, res) => {
 const fireEmployeeController = async (req, res) => {
     try {
         const firedEmployee = await fireEmployeeService(req)
-        res.json({message: 'Employee ' + firedEmployee + ' has been fired'})
+        res.status(200).json({message: 'Employee ' + firedEmployee + ' has been fired'})
     } catch (error) {
         console.log(error)
         res.json({message: error.message})
