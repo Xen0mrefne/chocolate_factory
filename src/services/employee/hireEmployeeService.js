@@ -3,7 +3,7 @@ const EmployeeModel = require('../../models/employee.models')
 const hireEmployeeService = async (req) => {
     const employee = req.body
     const {firstName} = employee
-    const alreadyEmployee = await EmployeeModel.find({firstName})
+    const alreadyEmployee = await EmployeeModel.findOne({firstName})
 
     if (alreadyEmployee) throw new Error("This employee already exists.")
 
